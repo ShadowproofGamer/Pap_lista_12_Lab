@@ -1,84 +1,70 @@
-class Generator():
-  var i = 0
-  def returnNumber():Int =
-    {
-      i+=1
-      (i-1)
-    }
+import scala.annotation.tailrec
 
-class Zwierzak(gatunek:String, imie:String, rokUr:Int):
-  val gat = gatunek
-  val im = imie
-  val rok = rokUr
-  override def toString: String = ""+gat+" "+im+" "+rok+"\n"
+object Generator:
+  var id = 0
+end Generator
 
-class Obora(owner:String, nrOfBoxes:Int, generator: Generator):
-  var nr = generator.returnNumber()
-  var ow = owner
-  var boxes = nrOfBoxes
-  var animals = new Array[Zwierzak](0)
+
+case class Zwierzak(var gatunek:String, var imie:String, var rokUr:Int):
+  override def toString: String = ""+gatunek+" "+imie+" "+rokUr
+end Zwierzak
+
+
+class Obora(var owner:String, var nrOfBoxes:Int):
+  var nr = Generator.id
+  Generator.id += 1
+  var animals: List[Zwierzak] = List()
   def addAnimal(animal: Zwierzak): Unit = {
-    if animals.length < nrOfBoxes then animals:+animal
+    if animals.length < nrOfBoxes then animals = animal :: animals
     else throw new Exception(s"cannot add new animals")
   }
-  /*
-  def removeAnimal(imie:String): Unit = {
-    var i = 0
-    var newAnimals:Array[Zwierzak] = new Array[Zwierzak](nrOfBoxes)
-    for (x <- animals)
-    {
-      if x.im != imie then newAnimals :+ x
-      i+=1
-    }
-    animals = newAnimals
-  }*/
 
-  def removeAnimal(gatunek: String): Unit = {
-    var done = false
-    var i = 0
-    var newAnimals: Array[Zwierzak] = new Array[Zwierzak](nrOfBoxes)
-    for (x <- animals) {
-      if x.gat != gatunek then newAnimals :+ x
-      else done = true
-      i += 1
+  def removeAnimal(animal: Zwierzak):Unit = {
+    @tailrec
+    def removeAnimal_rec(listOfAnimals: List[Zwierzak], acc: List[Zwierzak]): List[Zwierzak] = {
+      listOfAnimals match
+        case Nil if (acc == animals) => throw new Exception(s"Nie ma takiego zwierzecia")
+        case Nil => acc.reverse
+        case hd :: tl if (hd == animal) => removeAnimal_rec(tl, acc)
+        case hd :: tl => removeAnimal_rec(tl, hd :: acc)
     }
-    animals = newAnimals
-    if (!done) throw new Exception(s"couldn't find and remove animal")
+    animals = removeAnimal_rec(animals, List())
   }
-  def showAnimals(): Unit = for (x <- animals) print(x)
-  def moveAnimal(obora: Obora, imie:String):Unit =
-    {
-      var done = false
-      var i = 0
-      var newAnimals: Array[Zwierzak] = new Array[Zwierzak](nrOfBoxes)
-      for (x <- animals) {
-        if x.im != imie then newAnimals :+ x
-        else if(!done)
-          {
-            obora.addAnimal(x)
-            removeAnimal(x.im)
-            done = true
-          }
-        i += 1
-      }
-      if !done then throw new Exception(s"couldn't find and move animal")
-    }
 
-var gen = new Generator()
-var ob1 = new Obora("Maciej", 5, gen)
-var ob2 = new Obora("Paweł", 3, gen)
 
-ob1.addAnimal(new Zwierzak("Krowa", "Mućka", 2022))
-ob1.addAnimal(new Zwierzak("Krowa", "M2", 2022))
-ob1.addAnimal(new Zwierzak("Krowa", "M3", 2022))
-ob1.addAnimal(new Zwierzak("Krowa", "M4", 2022))
-ob1.addAnimal(new Zwierzak("Kura", "Gdakacz", 2022))
-ob1.addAnimal(new Zwierzak("Kura", "Cichacz", 2022))
+  def showAnimals(): Unit = {
+    println("\n"+"Obora nr "+nr+"\twłaściciel: "+owner+"\twielkość: "+nrOfBoxes)
+    for (x <- animals) println(x)
+  }
 
-print(Zwierzak("Krowa", "Mućka", 2022))
+  def moveAnimal(obora: Obora, animal: Zwierzak): Unit = {
+    removeAnimal(animal)
+    obora.addAnimal(animal)
+  }
+end Obora
+
+
+//var gen = new Generator()
+var ob1 = new Obora("Maciej", 5)
+var ob2 = new Obora("Paweł", 3)
+var zw1 = Zwierzak("Krowa", "Mućka", 2022)
+var zw2 = Zwierzak("Krowa", "M2", 2019)
+var zw3 = Zwierzak("Krowa", "M3", 2021)
+var zw4 = Zwierzak("Krowa", "M4", 2022)
+var zw5 = Zwierzak("Kura", "Gdakacz", 2022)
+var zw6 = Zwierzak("Kura", "Cichacz", 2022)
+
+ob1.addAnimal(zw1)
+ob1.addAnimal(zw2)
+ob1.addAnimal(zw3)
+ob1.addAnimal(zw4)
+ob1.addAnimal(zw5)
+ob1.addAnimal(zw6)
+
+
 ob1.showAnimals()
 ob2.showAnimals()
-ob1.moveAnimal(ob2, "Gdakacz")
+ob1.moveAnimal(ob2, zw5)
 ob1.showAnimals()
 ob2.showAnimals()
 
