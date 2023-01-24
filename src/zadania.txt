@@ -1,0 +1,69 @@
+Zad. 1. [5p.] Zaimplementować w Scala klasę Obora, która będzie opisywała budowane we wsi obory.
+W ramach klasy mają wystąpić następujące składniki: nr obory, jej właściciel,
+liczba boksów dla zwierząt (jeden boks dla jednego zwierzaka) oraz aktualna lista zwierząt
+zamieszkujących oborę. Każde ze zwierząt ma opisywać klasa Zwierzak o następujących składnikach:
+gatunek zwierzaka, jego imię oraz rok urodzenia. Umożliwić kwaterowanie zwierzaka w oborze,
+jego wykwaterowywanie, wyświetlanie aktualnej listy zwierząt zamieszkujących oborę (wraz z ich danymi)
+a także przenoszenie zwierząt między oborami. Unikalny nr obory ma być generowany automatycznie
+podczas tworzenia nowego obiektu klasy Obora. Zilustrować wspomniane operacje na odpowiednich przykładach.
+
+Zad. 2. [5p.] Pewna grupa ptaków założyła klub przyjacielski,
+którego (jak na razie) członkami są ptaki następujących gatunków:
+pingwiny, gołębie, strusie, sokoły i kury. Aby pamiętać istotne dane ptaków stworzono ewidencję członków klubu.
+Każdy nowy członek klubu uzyskuje unikalny numer ewidencyjny i rejestracja każdego uświetniona
+jest tryumfalnym komunikatem "Pochodzę od dinozaurów!!". W zależności od gatunku ptak charakteryzuje
+się jedną lub kilkoma cechami ze zbioru cech: pływanie, latanie, nurkowanie, bieganie.
+Cechy latanie i bieganie posiadają swoje stopnie, w zależności od ich opanowania przez ptaki.
+Elementem każdej cechy jest komunikat o nazwie gatunku charakteryzowanego przez cechę.
+Zdefiniować w Scala odpowiednią strukturę modelującą ewidencję. Stworzyć (wprowadzić) po
+kilka ptaków każdego gatunku (przykład tworzenia danych nowego ptaka poniżej) a następnie
+zdefiniować listy zawierające ptaki charakteryzujące się każdą z cech. Wyświetlić dane ptaków
+z każdej listy, zgodnie z przykładem poniżej.
+
+Przykładowe tworzenie danych nowego ptaka:
+
+val pi1=new Pingwin
+Pochodzę od dinozaurów!!!
+pi1: Pingwin = Pingwin@613420f4
+
+Przykładowe wyświetlone dane ptaków latających:
+
+Ptak nr 2 - Gołąb
+   Dobrze latam
+Ptak nr 4 - Sokół
+   Latam znakomicie
+Ptak nr 5 - Kura
+   Słabo latam
+Ptak nr 7 - Gołąb
+   Dobrze latam
+
+Przykładowe wyświetlone dane ptaków nurkujących:
+
+Ptak nr 1 - Pingwin
+   Nurkuję
+Ptak nr 6 - Pingwin
+   Nurkuję
+
+Przykładowe wyświetlone dane ptaków pływających:
+
+Ptak nr 1 - Pingwin
+   Pływam
+Ptak nr 2 - Gołąb
+   Pływam
+Ptak nr 6 - Pingwin
+   Pływam
+Ptak nr 7 - Gołąb
+   Pływam
+
+Przykładowe wyświetlone dane ptaków biegających:
+
+Ptak nr 2 - Gołąb
+   Słabo biegam
+Ptak nr 3 - Struś
+   Świetnie biegam
+Ptak nr 5 - Kura
+   Dobrze biegam
+Ptak nr 7 - Gołąb
+   Słabo biegam
+Ptak nr 8 - Strus
+   Świetnie biegam
