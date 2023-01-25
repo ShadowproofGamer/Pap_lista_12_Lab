@@ -2,6 +2,10 @@ import scala.annotation.tailrec
 
 object Generator:
   var id = 0
+  def getId:Int = {
+    (id += 1)
+    id-1
+  }
 end Generator
 
 
@@ -11,8 +15,7 @@ end Zwierzak
 
 
 class Obora(var owner:String, var nrOfBoxes:Int):
-  var nr = Generator.id
-  Generator.id += 1
+  var nr = Generator.getId
   var animals: List[Zwierzak] = List()
   def addAnimal(animal: Zwierzak): Unit = {
     if animals.length < nrOfBoxes then animals = animal :: animals
